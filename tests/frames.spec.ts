@@ -1,11 +1,12 @@
+
 import { test, expect } from '@playwright/test';
 
 test('User can interact with frames and iframes', async ({ page }) => {
     test.setTimeout(90000);
 
-    // Nested Frames
+    // Nested frames
     await page.goto('https://the-internet.herokuapp.com/nested_frames', {
-        waitUntil: 'domcontentloaded',
+        waitUntil: 'commit',
         timeout: 60000
     });
 
@@ -13,19 +14,19 @@ test('User can interact with frames and iframes', async ({ page }) => {
 
     await expect(
         topFrame.frameLocator('frame[name="frame-left"]').locator('body')
-    ).toContainText('LEFT', { timeout: 15000 });
+    ).toHaveText(/LEFT/, { timeout: 15000 });
 
     await expect(
         topFrame.frameLocator('frame[name="frame-middle"]').locator('body')
-    ).toContainText('MIDDLE', { timeout: 15000 });
+    ).toHaveText(/MIDDLE/, { timeout: 15000 });
 
     await expect(
         topFrame.frameLocator('frame[name="frame-right"]').locator('body')
-    ).toContainText('RIGHT', { timeout: 15000 });
+    ).toHaveText(/RIGHT/, { timeout: 15000 });
 
     // iFrame
     await page.goto('https://the-internet.herokuapp.com/iframe', {
-        waitUntil: 'domcontentloaded',
+        waitUntil: 'commit',
         timeout: 60000
     });
 
